@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="src/styles/styles.css">
+    <link rel="stylesheet" href="src/styles/header.css">
+    <link rel="stylesheet" href="src/styles/home.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Mundo do Faz de Conta</title>
+</head>
+<body>
+    <header>
+        <!--Navbar-->
+        <nav id="navbar">
+            <!--<i class="fa-solid fa-gamepad" id="nav_logo" style="margin-right: 16px;"> Mundo do Faz de Conta</i>-->
+            <img src="src/images/Logo.jpeg" alt="" style="height: 75px; width: 250px; margin-top: 15px; margin-right: 50px;">
+            
+            <ul id="nav_list">
+                <li class="nav-item active">
+                    <a href="#home">Início</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index2.html">Brinquedos</a>
+                </li>
+            </ul>
+
+            <!--Barra de pesquisa-->
+            <div style="display: flex; align-items: center; gap: 8px; width: 100%; justify-content: space-between; flex-wrap: wrap;">
+                <input type="search" class="btn-default search-input" style="flex-grow: 1; max-width: 500px; min-width: 200px; margin: 10px auto;" placeholder="Buscar brinquedos..." aria-label="Busca"/>
+              
+                <!--Botão carrinho de compras-->
+                <div style="display: flex; gap: 10px; align-items: center;">
+                  <div class="cart-icon">
+                    <button class="btn-default cart-icon-button">
+                      <i class="fa-solid fa-cart-shopping"></i>
+                    </button>
+                    <span>0</span>
+                  </div>
+              
+                  <!--Botão cadastro-->
+                  <div class="profile-icon">
+                    <button id="logout-btn" class="btn-default hidden">Sair</button>
+                    <button class="btn-default profile-button">
+                      <i class="fa-solid fa-user"></i>
+                    </button>
+                  </div>
+              
+                  <button id="mobile_btn">
+                    <i class="fa-solid fa-bars"></i>
+                  </button>
+                </div>
+              </div>
+
+            <!-- Modal de login/cadastro -->
+            <div class="overlay hidden" id="overlay"></div>
+                <div class="modal hidden" id="user-modal">
+                <div class="modal-header">
+                    <h2 id="modal-title">Login</h2>
+                    <button id="close-modal" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <form id="login-form">
+                 <input type="email" name="email" id="login-email" placeholder="Email" required>
+                 <input type="password" name="senha" id="login-senha" placeholder="Senha" required>
+                    <button type="submit" class="btn-default">Entrar</button>
+                    <p id="login-message"></p>
+                    <p class="switch-form">Não tem uma conta? <a href="#" id="go-to-register">Cadastre-se</a></p>
+                </form>
+                <form id="register-form" class="hidden">
+                    <input type="text" name="nome" placeholder="Nome completo" required />
+                    <input type="email" name="email" placeholder="Email" required />
+                    <input type="password" name="senha" placeholder="Senha" required />
+                    <input type="date" name="nascimento" placeholder="Data de nascimento" required />
+                    <input type="text" name="cpf" placeholder="CPF" required />
+                    <input type="text" id="cep" name="cep" placeholder="CEP" required />
+
+                    <div id="address-fields" class="hidden">
+                    <input type="text" id="rua" name="rua" placeholder="Rua" required />
+                    <input type="text" id="numero" name="numero" placeholder="Número" required />
+                    <input type="text" id="bairro" name="bairro" placeholder="Bairro" required />
+                    <input type="text" id="cidade" name="cidade" placeholder="Cidade" required />
+                    <input type="text" id="estado" name="estado" placeholder="Estado" required />
+                    <input type="text" id="complemento" name="complemento" placeholder="Complemento" />
+                    </div>
+
+                    <button type="submit" class="btn-default">Cadastrar</button>
+                    <p class="switch-form">Já tem conta? <a href="#" id="go-to-login">Entrar</a></p>
+                    <p id="cadastro-status"></p>
+                </form>
+                </div>
+        </nav>
+
+        <!--Renderização para celular (bars)-->
+        <div id="mobile_menu">
+            <ul id="mobile_nav_list">
+                <li class="nav-item active">
+                    <a href="#home">Início</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index2.html">Brinquedos</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!--Banner/início-->
+    <main id="content">
+        <section id="home">
+            <div class="shape"></div>
+            <div id="cta">
+                <h1 class="title">
+                    O Brinquedo que vai até
+                    <span>você</span>
+                </h1>
+
+                <p class="description">
+                    Criamos um universo cheio de cor, imaginação e alegria, 
+                    e fazemos questão de levar tudo isso até você, onde estiver!
+                </p>
+
+                <div id="cta_buttons">
+                    <a href="#" class="btn-default">
+                        Sobre Nós
+                    </a>
+
+                    <a href="tel:+47989019005" id="phone_button">
+                        <button class="btn-default">
+                            <i class="fa-solid fa-phone"></i>
+                        </button>
+                        (47) 98888-7777
+                    </a>
+                </div>
+
+                <div class="social-media-buttons">
+                    <a href="">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+
+                    <a href="">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+
+                    <a href="">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!--Imagem inicial-->
+            <div id="banner">
+                <img src="src/images/csm_brinquedos_cd0f4dbd74-removebg-preview.png" alt="">
+            </div>
+        </section>
+    </main>
+
+    <!--Carrinho de compras-->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-close">
+            <i class="fa-solid fa-close"></i>
+        </div>
+            <div class="cart-menu">
+                <h3>Meu Carrinho</h3>
+                <div class="cart-items"></div>
+            </div>
+
+            <div class="sidebar--footer">
+                <div class="total--amount">
+                    <h5>Total</h5>
+                    <div class="cart-total">R$0,00</div>
+                </div>
+                <button class="checkout-btn"><strong>Finalizar Compra</strong></button>
+            </div>
+    </div>
+
+    <script src="src/javascript/script.js"></script>
+    <script src="src/javascript/script2.js"></script>
+    <script src="src/javascript/cadastro.js"></script>
+    <script src="src/javascript/login.js"></script>
+</body>
+</html>
+

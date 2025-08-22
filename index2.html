@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="src/styles/styles.css">
+    <link rel="stylesheet" href="src/styles/header.css">
+    <link rel="stylesheet" href="src/styles/home.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Mundo do Faz de Conta - Brinquedos</title>
+</head>
+<body>
+    <header>
+        <!--Navbar-->
+        <nav id="navbar">
+            <!--<i class="fa-solid fa-gamepad" id="nav_logo" style="margin-right: 16px;"> Mundo do Faz de Conta</i>-->
+            <img src="src/images/Logo.jpeg" alt="" style="height: 75px; width: 250px; margin-top: 15px; margin-right: 50px;">
+            
+            <ul id="nav_list">
+                <li class="nav-item">
+                    <a href="index.html">Início</a>
+                </li>
+                <li class="nav-item active">
+                    <a href="index2.html">Brinquedos</a>
+                </li>
+            </ul>
+
+            <!--Barra de pesquisa-->
+            <div style="display: flex; align-items: center; gap: 8px; width: 100%; justify-content: space-between; flex-wrap: wrap;">
+                <input type="search" id="input-busca" class="btn-default search-input" style="flex-grow: 1; max-width: 500px; min-width: 200px; margin: 10px auto;" placeholder="Buscar brinquedos..." aria-label="Busca"/>
+              
+                <!--Botão carrinho de compras-->
+                <div style="display: flex; gap: 10px; align-items: center;">
+                  <div class="cart-icon">
+                    <button class="btn-default cart-icon-button">
+                      <i class="fa-solid fa-cart-shopping"></i>
+                    </button>
+                    <span>0</span>
+                  </div>
+              
+                  <!--Botão cadastro-->
+                  <div class="profile-icon">
+                    <button id="logout-btn" class="btn-default hidden">Sair</button>
+                    <button class="btn-default profile-button">
+                      <i class="fa-solid fa-user"></i>
+                    </button>
+                  </div>
+              
+                  <button id="mobile_btn">
+                    <i class="fa-solid fa-bars"></i>
+                  </button>
+                </div>
+              </div>
+
+            <!-- Modal de login/cadastro -->
+            <div class="overlay hidden" id="overlay"></div>
+                <div class="modal hidden" id="user-modal">
+                <div class="modal-header">
+                    <h2 id="modal-title">Login</h2>
+                    <button id="close-modal" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <form id="login-form">
+                 <input type="email" name="email" id="login-email" placeholder="Email" required>
+                 <input type="password" name="senha" id="login-senha" placeholder="Senha" required>
+                    <button type="submit" class="btn-default">Entrar</button>
+                    <p id="login-message"></p>
+                    <p class="switch-form">Não tem uma conta? <a href="#" id="go-to-register">Cadastre-se</a></p>
+                </form>
+                <form id="register-form" class="hidden">
+                    <input type="text" name="nome" placeholder="Nome completo" required />
+                    <input type="email" name="email" placeholder="Email" required />
+                    <input type="password" name="senha" placeholder="Senha" required />
+                    <input type="date" name="nascimento" placeholder="Data de nascimento" required />
+                    <input type="text" name="cpf" placeholder="CPF" required />
+                    <input type="text" id="cep" name="cep" placeholder="CEP" required />
+
+                    <div id="address-fields" class="hidden">
+                    <input type="text" id="rua" name="rua" placeholder="Rua" required />
+                    <input type="text" id="numero" name="numero" placeholder="Número" required />
+                    <input type="text" id="bairro" name="bairro" placeholder="Bairro" required />
+                    <input type="text" id="cidade" name="cidade" placeholder="Cidade" required />
+                    <input type="text" id="estado" name="estado" placeholder="Estado" required />
+                    <input type="text" id="complemento" name="complemento" placeholder="Complemento" />
+                    </div>
+
+                    <button type="submit" class="btn-default">Cadastrar</button>
+                    <p class="switch-form">Já tem conta? <a href="#" id="go-to-login">Entrar</a></p>
+                    <p id="cadastro-status"></p>
+                </form>
+                </div>
+        </nav>
+
+        <!--Renderização para celular (bars)-->
+        <div id="mobile_menu">
+            <ul id="mobile_nav_list">
+                <li class="nav-item">
+                    <a href="index.html">Início</a>
+                </li>
+                <li class="nav-item active">
+                    <a href="index2.html">Brinquedos</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+    <!--Carrinho de compras-->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-close">
+            <i class="fa-solid fa-close"></i>
+        </div>
+            <div class="cart-menu">
+                <h3>Meu Carrinho</h3>
+                <div class="cart-items"></div>
+            </div>
+
+            <div class="sidebar--footer">
+                <div class="total--amount">
+                    <h5>Total</h5>
+                    <div class="cart-total">R$0,00</div>
+                </div>
+                <button class="checkout-btn"><strong>Finalizar Compra</strong></button>
+            </div>
+    </div>
+
+    <section>
+        <main>
+            <h2 class="section-heading">Marcas</h2>
+            <div class="menu--list">
+                <div class="menu--item">
+                    <img src="src/images/Produtos/LEGO.png" alt="" style="height: 85px; width: 95px; margin-bottom: 10px;">
+                    <h5>LEGO</h5>
+                </div>
+                <div class="menu--item">
+                    <img src="src/images/Produtos/Disney.jpeg" alt="" style="height: 85px; width: 95px; margin-bottom: 10px;">
+                    <h5>Disney</h5>
+                </div>
+                <div class="menu--item">
+                    <img src="src/images/Produtos/Penalty.jpg" alt="" style="height: 85px; width: 95px; margin-bottom: 10px;">
+                    <h5>Penalty</h5>
+                </div>
+                <div class="menu--item">
+                    <img src="src/images/Produtos/Barbie.jpg" alt="" style="height: 85px; width: 95px; margin-bottom: 10px;">
+                    <h5>Barbie</h5>
+                </div>
+            </div>
+
+            <!-- card item scetion -->
+            <h2 class="section-heading">Stitch</h2>
+            <div class="card--list">
+                <div class="card">
+                    <div class="badge">Lançamento</div>
+                    <img src="src/images/Produtos/Stich Pelúcia.webp" alt="">
+                    <h4 class="card--title">Stich Pelúcia <br><br></h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$289,90</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="badge">Lançamento</div>
+                    <img src="src/images/Produtos/Funko Pop do Stitch.webp" alt="">
+                    <h4 class="card--title">Funko pop do Stitch</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$149,99</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="badge">Lançamento</div>
+                    <img src="src/images/Produtos/Angel Stitch Pelúcia.webp" alt="">
+                    <h4 class="card--title">Angel Stitch Pelúcia</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$259,99</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="badge2">Exclusivo</div>
+                    <img src="src/images/Produtos/LEGO Stitch.jpg" alt="">
+                    <h4 class="card--title">LEGO Stitch <br><br></h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$454,99</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="src/images/Produtos/Stitch Pelúcia Disney.jpeg" alt="">
+                    <h4 class="card--title">Stitch Pelúcia Disney</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$110,00</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="badge">Lançamento</div>
+                    <img src="src/images/Produtos/Funk Pop Stitch.webp" alt="">
+                    <h4 class="card--title">Funk Pop Stitch <br><br></h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$236,17</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-heading">Esportes</h2>
+            <div class="card--list">
+                <div class="card">
+                    <img src="src/images/Produtos/Bola de Futebol.jpeg" alt="">
+                    <h4 class="card--title">Bola de Futebol</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$69,99</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="src/images/Produtos/Bola de Futsal.jpeg" alt="">
+                    <h4 class="card--title">Bola de Futsal</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$81,50</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="src/images/Produtos/Bola de Basquete.webp" alt="">
+                    <h4 class="card--title">Bola de Basquete</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$66,46</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="src/images/Produtos/Bola de Vôlei.jpeg" alt="">
+                    <h4 class="card--title">Bola de Vôlei</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$113,90</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="src/images/Produtos/Bola de Rugby.jpg" alt="">
+                    <h4 class="card--title">Bola de Rugby</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$133,99</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="src/images/Produtos/Kit Tênis.jpg" alt="">
+                    <h4 class="card--title">Kit Tênis</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$122,90</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-heading">Homem Aranha & Venom</h2>
+            <div class="card--list">
+                <div class="card">
+                    <img src="src/images/Produtos/Carro de Controle Remoto Homem Aranha.jpg" alt="">
+                    <h4 class="card--title">Carrinho Controle Remoto</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$93,99</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="badge2">Exclusivo</div>
+                    <img src="src/images/Produtos/LEGO Homem Aranha.jpg" alt="">
+                    <h4 class="card--title">LEGO Homem Aranha vs Venom</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$102,99</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+
+                    <img src="src/images/Produtos/Boneco Homem Aranha.webp" alt="">
+                    <h4 class="card--title">Boneco do Homem Aranha</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$229,80</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="badge2">Exclusivo</div>
+                    <img src="src/images/Produtos/LEGO Venom.jpg" alt="">
+                    <h4 class="card--title">LEGO Venom <br><br></h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$102,99</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="src/images/Produtos/Boneco Venom.webp" alt="">
+                    <h4 class="card--title">Boneco Venom</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$512,94</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="src/images/Produtos/Boneco Venom 2.webp" alt="" style=" height: 185px;">
+                    <h4 class="card--title">Boneco Venom</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$93,99</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-heading">Jurassic World</h2>
+            <div class="card--list">
+                <div class="card">
+                    <div class="badge">Lançamento</div>
+                    <img src="src/images/Produtos/Tyrannosaurus Rex Jurassic World.webp" alt="">
+                    <h4 class="card--title">Tyrannosaurus Rex</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$343,99</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="badge">Lançamento</div>
+                    <img src="src/images/Produtos/Dinossauro Baryonyx Jurassic World.webp" alt="">
+                    <h4 class="card--title">Dinossauro Baryonyx</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$319,99</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="badge">Lançamento</div>
+                    <img src="src/images/Produtos/Dinossauro Spinosaurus Jurassic World.webp" alt="">
+                    <h4 class="card--title">Dinossauro Spinosaurus</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$699,00</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="badge">Lançamento</div>
+                    <img src="src/images/Produtos/Dinossauro Therizinosaurus Jurassic World.webp" alt="">
+                    <h4 class="card--title">Dinossauro Therizinosaurus</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$425,99</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="src/images/Produtos/Jogo Da Memória Jurassic World.webp" alt="">
+                    <h4 class="card--title">Jogo de Memória Jurassic World</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$49,90</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="badge2">Exclusivo</div>
+                    <img src="src/images/Produtos/LEGO Jurassic World.jpg" alt="">
+                    <h4 class="card--title">LEGO Jurassic World</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$283,05</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-heading">Barbie</h2>
+            <div class="card--list">
+                <div class="card">
+                    <img src="src/images/Produtos/Barbie Estante Pet Shop.webp" alt="">
+                    <h4 class="card--title">Barbie Estante Pet Shop</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$281,99</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="src/images/Produtos/Karaokê Barbie.webp" alt="">
+                    <h4 class="card--title">Karaokê Barbie <br><br></h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$281,99</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="src/images/Produtos/Barbie Ursinhos Carinhosos.webp" alt="">
+                    <h4 class="card--title">Barbie Ursinhos Carinhosos</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$299,99</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="src/images/Produtos/Pelúcia Cachorro Barbie.webp" alt="">
+                    <h4 class="card--title">Pelúcia Cachorro Barbie</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$77,97</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="src/images/Produtos/Barbie Casa de Férias.webp" alt="" style="margin-top: 15px;">
+                    <h4 class="card--title">Barbie Casa de Férias <br><br></h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$1.399,99</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="src/images/Produtos/Barbie Pônei Penteado.webp" alt="">
+                    <h4 class="card--title">Barbie Pônei Penteado</h4>
+                    
+                    <div class="card--price">
+                        <div class="price">R$129,90</div>
+                        <i class="fa-solid fa-plus add-to-cart"></i>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
+
+    <script src="src/javascript/script.js"></script>
+    <script src="src/javascript/script2.js"></script>
+    <script src="src/javascript/cadastro.js"></script>
+    <script src="src/javascript/login.js"></script>
+</body>
+</html>
+
