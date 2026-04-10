@@ -13,10 +13,10 @@ A documentação detalhada inclui:
 🖼️ Demonstração do Sistema
 
 🏠 Página inicial
-![Home](home.png)
+![Home](images/home.png)
 
 🛒 Carrinho de compras
-![Carrinho](carrinho.png)
+![Carrinho](images/carrinho.png)
 
 👤 Login
-![Login](login.png)
+![Login](images/login.png)
